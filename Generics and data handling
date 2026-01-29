@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+
+public class DataHandler<T>
+{
+    private List<T> data = new List<T>();
+
+    // Add data to the handler
+    public void AddData(T item)
+    {
+        data.Add(item);
+    }
+
+    // Retrieve data by index
+    public T RetrieveData(int index)
+    {
+        if (index < 0 || index >= data.Count)
+        {
+            throw new IndexOutOfRangeException("Invalid index.");
+        }
+
+        return data[index];
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        DataHandler<int> intHandler = new DataHandler<int>();
+
+        intHandler.AddData(10);
+        intHandler.AddData(20);
+        intHandler.AddData(30);
+
+        Console.WriteLine("Retrieved values:");
+        Console.WriteLine(intHandler.RetrieveData(0));
+        Console.WriteLine(intHandler.RetrieveData(1));
+        Console.WriteLine(intHandler.RetrieveData(2));
+    }
+}
