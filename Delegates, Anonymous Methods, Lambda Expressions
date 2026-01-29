@@ -1,0 +1,23 @@
+using System;
+
+class Program
+{
+    // 1. Declare delegate
+    delegate int MathOperation(int a, int b);
+
+    static void Main()
+    {
+        // 2. Lambda expression for Add
+        MathOperation add = (a, b) => a + b;
+
+        // 3. Anonymous method for Multiply
+        MathOperation multiply = delegate (int a, int b)
+        {
+            return a * b;
+        };
+
+        // 4. Invoke delegates
+        Console.WriteLine("Addition Result: " + add(5, 3));
+        Console.WriteLine("Multiplication Result: " + multiply(5, 3));
+    }
+}
