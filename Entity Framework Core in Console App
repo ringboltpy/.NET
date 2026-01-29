@@ -1,1 +1,141 @@
+//Student Model
 
+public class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int Grade { get; set; }
+}
+
+//DbContext
+
+using Microsoft.EntityFrameworkCore;
+
+public class SchoolContext : DbContext
+{
+    public DbSet<Student> Students { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+        options.UseSqlServer(
+            "Server=(localdb)\\MSSQLLocalDB;Database=SchoolDb;Trusted_Connection=True;");
+    }
+}
+
+//CRUD Operations in Console App
+
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        using SchoolContext context = new SchoolContext();
+
+        bool running = true;
+
+        while (running)
+        {
+            Console.WriteLine("\n1. Add Student");
+            Console.WriteLine("2. View Students");
+            Console.WriteLine("3. Update Student Grade");
+            Console.WriteLine("4. Delete Student");
+            Console.WriteLine("5. Exit");
+            Console.Write("Choose an option: ");
+
+            string choice = Console.ReadLine()!;
+
+            try
+            {
+                switch (choice)
+                {
+                    case "1":
+                        AddStudent(context);
+                        break;
+
+                    case "2":
+                        ViewStudents(context);
+                        break;
+
+                    case "3":
+                        UpdateStudent(context);
+                        break;
+
+                    case "4":
+                        DeleteStudent(context);
+                        break;
+
+                    case "5":
+                        running = false;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+    }
+
+    static void AddStudent(SchoolContext context)
+    {
+        Console.Write("Name: ");
+        string name = Console.ReadLine()!;
+
+        Console.Write("Grade: ");
+        int grade = int.Parse(Console.ReadLine()!);
+
+        context.Students.Add(new Student { Name = name, Grade = grade });
+        context.SaveChanges();
+
+        Console.WriteLine("Student added successfully.");
+    }
+
+    static void ViewStudents(SchoolContext context)
+    {
+        var students = context.Students.ToList();
+
+        foreach (var student in students)
+        {
+            Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Grade: {student.Grade}");
+        }
+    }
+
+    static void UpdateStudent(SchoolContext context)
+    {
+        Console.Write("Student ID: ");
+        int id = int.Parse(Console.ReadLine()!);
+
+        var student = context.Students.Find(id);
+        if (student == null)
+        {
+            Console.WriteLine("Student not found.");
+            return;
+        }
+
+        Console.Write("New Grade: ");
+        student.Grade = int.Parse(Console.ReadLine()!);
+
+        context.SaveChanges();
+        Console.WriteLine("Grade updated.");
+    }
+
+    static void DeleteStudent(SchoolContext context)
+    {
+        Console.Write("Student ID: ");
+        int id = int.Parse(Console.ReadLine()!);
+
+        var student = context.Students.Find(id);
+        if (student == null)
+        {
+            Console.WriteLine("Student not found.");
+            return;
+        }
+
+        context.Students.Remove(student);
+        context.SaveChanges();
+
+        Console.WriteLine("Student deleted.");
+    }
+}
