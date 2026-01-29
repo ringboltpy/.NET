@@ -1,0 +1,30 @@
+using System;
+
+public interface IDevice
+{
+    void Activate();
+}
+
+public class DeviceController : IDevice
+{
+    private string deviceType;
+
+    public DeviceController(string deviceType)
+    {
+        this.deviceType = deviceType;
+    }
+
+    public void Activate()
+    {
+        Console.WriteLine($"The {deviceType} is now active.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        IDevice device = new DeviceController("TV");
+        device.Activate();
+    }
+}
