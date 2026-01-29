@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // 1. Declare and initialize the list
+        List<int> numbers = new List<int> { 5, 8, 12, 3 };
+
+        // 2. Add a new number
+        numbers.Add(20);
+
+        // 3. Print elements using foreach
+        Console.WriteLine("Numbers in the list:");
+        foreach (int number in numbers)
+        {
+            Console.WriteLine(number);
+        }
+
+        // 4. Find the index of a specific number
+        int searchNumber = 12;
+        int index = numbers.IndexOf(searchNumber);
+
+        if (index != -1)
+        {
+            Console.WriteLine($"Index of {searchNumber}: {index}");
+        }
+        else
+        {
+            Console.WriteLine($"{searchNumber} not found in the list.");
+        }
+
+        // 5. Remove an element
+        numbers.Remove(8);
+
+        Console.WriteLine("List after removing 8:");
+        foreach (int number in numbers)
+        {
+            Console.WriteLine(number);
+        }
+    }
+}
