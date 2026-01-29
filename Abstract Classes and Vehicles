@@ -1,0 +1,48 @@
+using System;
+
+public abstract class Vehicle
+{
+    public abstract void StartEngine();
+    public abstract void Accelerate();
+}
+
+public class Car : Vehicle
+{
+    public override void StartEngine()
+    {
+        Console.WriteLine("Car engine started");
+    }
+
+    public override void Accelerate()
+    {
+        Console.WriteLine("Car is accelerating.");
+    }
+}
+
+public class Bike : Vehicle
+{
+    public override void StartEngine()
+    {
+        Console.WriteLine("Bike engine started");
+    }
+
+    public override void Accelerate()
+    {
+        Console.WriteLine("Bike is pedaling.");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Vehicle car = new Car();
+        Vehicle bike = new Bike();
+
+        car.StartEngine();
+        car.Accelerate();
+
+        bike.StartEngine();
+        bike.Accelerate();
+    }
+}
